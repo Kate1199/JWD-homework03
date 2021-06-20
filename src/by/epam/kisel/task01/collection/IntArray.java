@@ -10,7 +10,7 @@ import java.util.Iterator;
  * 
  * @author kate kisel
  */
-public class IntArray implements Serializable, Iterable<Integer> {// Collection
+public class IntArray implements Serializable, Iterable<Integer> {
 
 	private static final long serialVersionUID = 1L;
 	private final static int[] EMPTY_ARRAY = {};
@@ -170,12 +170,12 @@ public class IntArray implements Serializable, Iterable<Integer> {// Collection
 		return Arrays.copyOf(array, array.length);
 	}
 	
-	public int findByIndex(int index) {
+	public int get(int index) {
 		return array[index];
 	}
 	
-	public void place(int index, int number) {
-		array[index] = number;
+	public void set(int index, int value) {
+		array[index] = value;
 	}
 	
 	public IntArray copy() {
