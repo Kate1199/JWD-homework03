@@ -137,8 +137,6 @@ public class TestLogic {
 		int[] expecteds = ArrayLogic.reverseSortMin(arrayNull);
 		int[] actuals = {4, 0, -6};
 		assertArrayEquals(expecteds, actuals);
-	}
-	
-	
+	}	
 	
 }
