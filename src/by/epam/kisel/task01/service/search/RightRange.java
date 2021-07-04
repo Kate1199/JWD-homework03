@@ -20,8 +20,8 @@ public class RightRange implements Range {
 	}
 
 	@Override
-	public int findNewMiddle(IntArray copy, int middleIndex) {
-		return copy.get(right - middleIndex);
+	public int findNewMiddle(IntArray array, int middleIndex) {
+		return array.get(right - middleIndex);
 	}
 	
 	

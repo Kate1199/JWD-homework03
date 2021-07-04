@@ -6,17 +6,20 @@ package by.epam.kisel.task01.service.uniqueNumbers;
  *
  */
 public class FibonacciNumbers implements WhichNumber {
+	
+	private final static int FIRST_FIBONACCI_NUMBER = 1;
+	
 
 	@Override
 	public boolean isSuchNumber(int number) {
-		int f1 = 1;
-		int f2 = 1;
-		int f = f1 + f2;
-		while (f < number) {
-			f1 = f2;
-			f2 = f;
-			f = f1 + f2;
+		int twoNumbersBack = FIRST_FIBONACCI_NUMBER;
+		int oneNumberBack = FIRST_FIBONACCI_NUMBER;
+		int currentNumber = twoNumbersBack + oneNumberBack;
+		while (currentNumber < number) {
+			twoNumbersBack = oneNumberBack;
+			oneNumberBack = currentNumber;
+			currentNumber = twoNumbersBack + oneNumberBack;
 		}
-		return (number == f) || (number == 1);
+		return (number == currentNumber) || (number == FIRST_FIBONACCI_NUMBER);
 	}
 }

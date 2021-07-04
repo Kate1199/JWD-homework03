@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import by.epam.kisel.task01.exception.NumberNotFoundException;
+
 /**
  * Класс-оболочка массива целого типа
  * 
@@ -31,30 +33,22 @@ public class IntArray implements Serializable, Iterable<Integer> {
 	public IntArray(Collection<Integer> collection) {
 
 		Object[] collectionArray = collection.toArray();
-
-		if (collectionArray.length != 0) {
-			array = new int[collection.size()];
-			for (int i = 0; i < collectionArray.length; i++) {
-				array[i] = (int) collectionArray[i];
-			}
-		} else {
-			array = EMPTY_ARRAY;
+		array = new int[collectionArray.length];
+		if (!isEmpty()) {
+			copyCollectionToArray(collectionArray);
+		} 
+	}
+	
+	private void copyCollectionToArray(Object[] collectionArray) {
+		for (int i = 0; i < collectionArray.length; i++) {
+			array[i] = (int) collectionArray[i];
 		}
 	}
 
 	private void expand() {
 		array = Arrays.copyOf(array, array.length + 1);
 	}
-
-	private int indexOf(int element) {
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] == element) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
+	
 	public int size() {
 		return array.length;
 	}
@@ -63,16 +57,20 @@ public class IntArray implements Serializable, Iterable<Integer> {
 		return array.equals(EMPTY_ARRAY);
 	}
 
-	public boolean contains(Object o) {
+	public boolean contains(int number) {
 		boolean contains = false;
 		for (int a : array) {
-			contains = areSimilar(a, o, contains);
+			contains = areSimilar(a, number);
+			if(contains) {
+				break;
+			}
 		}
 		return contains;
 	}
 
-	private boolean areSimilar(int number, Object o, boolean contains) {
-		if (number == (int) o) {
+	private boolean areSimilar(int number, int elementOfArray) {
+		boolean contains = false;
+		if (number == elementOfArray) {
 			contains = true;
 		}
 		return contains;
@@ -84,38 +82,48 @@ public class IntArray implements Serializable, Iterable<Integer> {
 		return true;
 	}
 
+	public boolean remove(int numberToRemove) {
+		int indexOfRemovingNumber = indexOf(numberToRemove);
+		return removeByIndex(indexOfRemovingNumber);
+	}
+	
+	private int indexOf(int element) {
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] == element) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	public boolean removeByIndex(int index) {
-		boolean checkIndex = index >= 0 && index < array.length;
-		if (checkIndex) {
+		boolean indexExists = index >= 0 && index < array.length;
+		if (indexExists) {
 			replaceWithNextNumber(index);
 			reduce();
 		}
-		return checkIndex;
+		return indexExists;
+	}
+	
+	private void replaceWithNextNumber(int index) {
+		for (int i = index; i < array.length - 1; i++) {
+			array[i] = array[i + 1];
+		}
 	}
 
 	private void reduce() {
 		array = Arrays.copyOf(array, array.length - 1);
 	}
 
-	private void replaceWithNextNumber(int index) {
-		for (int i = index; i < array.length - 1; i++) {
-			array[i] = array[i + 1];
-		}
 
-	}
-
-	public boolean remove(int numberToRemove) {
-		int indexOfRemovingNumber = indexOf(numberToRemove);
-		return removeByIndex(indexOfRemovingNumber);
-	}
-
-	public boolean containsAll(Collection<?> c) {
-		boolean[] contains = new boolean[c.size()];
+	public boolean containsAll(Collection<Integer> c) {
+		boolean[] contains = {};
 		boolean result = false;
 		int count = 0;
 
-		if (!c.contains(null) && c != null) {
-			for (Object elementOfCollection : c) {
+		if (c != null && !c.contains(null)) {
+			contains = new boolean[c.size()];
+			for (int elementOfCollection : c) {
 				if (contains(elementOfCollection)) {
 					contains[count++] = true;
 					result = true;
@@ -132,11 +140,11 @@ public class IntArray implements Serializable, Iterable<Integer> {
 		return controlState;
 	}
 
-	public boolean addAll(Collection<? extends Integer> c) {
+	public boolean addAll(Collection<Integer> c) {
 		return (c != null) && fastAdd(c);
 	}
 
-	private boolean fastAdd(Collection<? extends Integer> collection) {
+	private boolean fastAdd(Collection<Integer> collection) {
 		boolean add = true;
 		for (int element : collection) {
 			add = add && add(element);
@@ -144,11 +152,11 @@ public class IntArray implements Serializable, Iterable<Integer> {
 		return add;
 	}
 
-	public boolean removeAll(Collection<?> c) {
+	public boolean removeAll(Collection<Integer> c) {
 		return (c != null) && fastRemove(c);
 	}
 
-	private boolean fastRemove(Collection<?> c) {
+	private boolean fastRemove(Collection<Integer> c) {
 		boolean remove = false;
 		
 		for (int i = 0; i < array.length; i++) {
@@ -174,8 +182,15 @@ public class IntArray implements Serializable, Iterable<Integer> {
 		return array[index];
 	}
 	
-	public void set(int index, int value) {
-		array[index] = value;
+	public boolean set(int index, int value) {
+		boolean set;
+		if(index < 0 || index >= array.length) {
+			set = false;
+		} else {
+			array[index] = value;
+			set = true;
+		}
+		return set;
 	}
 	
 	public IntArray copy() {
@@ -208,7 +223,7 @@ public class IntArray implements Serializable, Iterable<Integer> {
 		boolean[] arrayOfStates = new boolean[array.length];
 		if(other.size() == array.length) {
 			for(int i = 0; i < array.length; i++) {
-				arrayOfStates[i] = (array[i] == other.indexOf(i));
+				arrayOfStates[i] = (array[i] == other.toArray()[i]);
 			}
 		}
 		return findOutState(arrayOfStates, true);

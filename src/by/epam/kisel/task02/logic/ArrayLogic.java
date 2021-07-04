@@ -12,6 +12,7 @@ public class ArrayLogic {
 	}
 
 	private static int[] findSum(int[][] array) {
+		array =  checkArrayLength(array);
 		int[] sum = new int[array.length];
 
 		for (int i = 0; i < array.length; i++) {
@@ -21,7 +22,36 @@ public class ArrayLogic {
 		}
 		return sum;
 	}
-
+	
+	private static boolean isNull(int[][] array) {
+		return array == null;
+	}
+	
+	private static boolean isNull(int[] array) {
+		return array == null;
+	}
+	
+	private static int[][] checkArrayLength(int[][] array) {
+		array = checkJaggedArrayLength(array);
+		array = checkEachArrayLength(array);
+		return array;
+	}
+	
+	private static int[][] checkJaggedArrayLength(int[][] array) {
+		if (isNull(array)) {
+			array = new int[0][0];
+		}
+		return array;
+	}
+	
+	private static int[][] checkEachArrayLength(int[][] array) {
+		for(int i = 0; i < array.length; i++) {
+			if (isNull(array[i])) {
+				array[i] = new int[0];
+			}
+		}
+		return array;
+	}
 	private static int[] sort(int[] array) {
 		for (int i = 0; i < array.length; i++) {
 			for (int j = 0; j < array.length - i - 1; j++) {
@@ -67,6 +97,7 @@ public class ArrayLogic {
 	}
 
 	private static int[] findMinOrMaxArray(int[][] array, MaxMinNumbers number) {
+		array = checkArrayLength(array);
 		int[] minOrMaxArray = new int[array.length];
 		for (int i = 0; i < array.length; i++) {
 			minOrMaxArray[i] = findMinOrMaxNumber(array[i], number);
@@ -75,12 +106,22 @@ public class ArrayLogic {
 	}
 
 	private static int findMinOrMaxNumber(int[] array, MaxMinNumbers number) {
-		int minOrMaxNumber = array[0];
+		int minOrMaxNumber = countFirstElement(array);
 
 		for (int elementOfArray : array) {
-			assignMinMax(number, elementOfArray, minOrMaxNumber);
+			minOrMaxNumber = assignMinMax(number, elementOfArray, minOrMaxNumber);
 		}
 		return minOrMaxNumber;
+	}
+	
+	private static int countFirstElement(int[] array) {
+		int element;
+		if(array.length == 0) {
+			element = 0;
+		} else {
+			element = array[0];
+		}
+		return element;
 	}
 
 	private static int assignMinMax(MaxMinNumbers number, int element, int minMax) {

@@ -4,7 +4,7 @@ import by.epam.kisel.task01.collection.IntArray;
 import by.epam.kisel.task01.exception.EmptyArrayException;
 
 /**
- * Class that search array for the smallest and the biggest numbers
+ * Class that searches array for the smallest and the biggest numbers
  * @author Kate Kisel
  *
  */

@@ -4,7 +4,7 @@ import by.epam.kisel.task01.collection.IntArray;
 import by.epam.kisel.task01.exception.NumberNotFoundException;
 
 /**
- * Class to search array for numbers, or minimum and maximum numbers
+ * Class to search array for numbers
  * @author Kate Kisel
  *
  */
@@ -22,7 +22,7 @@ public class NumberSearch {
 	 * 
 	 * @param key   key number
 	 * @param array the array to search for
-	 * @return desired number
+	 * @return if the array contains the key returns {@code true}, else returns {@code false}
 	 * @throws NumberNotFoundException
 	 */
 	public static boolean findItemBinarySearch(int key, IntArray array) {
@@ -71,7 +71,6 @@ public class NumberSearch {
 
 	/**
 	 * corrects the index of middle number and calculates middle number again
-	 * 
 	 * @param range right or left range for calculating new middle number
 	 * @param array the array to search in
 	 */
@@ -82,7 +81,7 @@ public class NumberSearch {
 
 	/**
 	 * calculates the index of middle number. If the index is less than one, then
-	 * index equals one. If left border matches right border the index of middle
+	 * index is assigned by one. If left border matches right border the index of middle
 	 * number is zero.
 	 */
 	private static void correctMiddleIndex() {

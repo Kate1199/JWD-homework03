@@ -14,6 +14,9 @@ import by.epam.kisel.task01.utility.RandomIntArrayUtility;
 public class Main {
 
 	public static void main(String[] args) {
+		
+		IntArray ia0 = new IntArray();
+		int a = ia0.get(1);
 
 		IntArray ia1 = new IntArray();
 		ia1.add(2);
@@ -32,7 +35,7 @@ public class Main {
 		int element = 55;
 		System.out.println(NumberSearch.findItemBinarySearch(element, ia1));
 
-		SortArray.reverseSort(ia1);
+		SortArray.reverseBubbleSort(ia1);
 		System.out.println(ia1.toString());
 
 		SortArray.reverse(ia1);

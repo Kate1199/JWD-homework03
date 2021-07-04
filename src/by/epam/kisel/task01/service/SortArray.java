@@ -28,7 +28,7 @@ public class SortArray {
 	 * @param i the lowest number
 	 * @param j the highest number
 	 */
-	private static void replaceNumbers(IntArray array, int i, int j) {
+	private static void swapHighestAndLowest(IntArray array, int i, int j) {
 		int temp;
 		
 		temp = array.get(j);
@@ -44,10 +44,15 @@ public class SortArray {
 	 */
 	private static void replaceNeighborNumbers(IntArray array, int left, int right) {
 		if (array.get(left) < array.get(right)) {
-			replaceNumbers(array, left, right);
+			swapHighestAndLowest(array, left, right);
 		}
 	}
 	
+	/**
+	 * checks if the array is null
+	 * @param array checking array
+	 * @return {@code true} if the array is null and {@code false} if the array isn't null
+	 */
 	private static boolean isNull(IntArray array) {
 		return array == null;
 	}
@@ -56,30 +61,24 @@ public class SortArray {
 	 * sorts numbers from the largest to the smaller
 	 * @param array the array to sort
 	 */
-	public static void reverseSort(IntArray array) {
-		bubbleSort(array);
-		reverse(array);
+	public static boolean reverseBubbleSort(IntArray array) {
+		boolean reverseBubbleSort = bubbleSort(array);
+		return reverseBubbleSort && reverse(array);
 	}
 	
 	/**
-	 * sorts numbers in reverse order
+	 * sorts numbers in the reverse order
 	 * @param array the array to sort
 	 * @return false, if array is null, otherwise returns true
 	 */
 	public static boolean reverse(IntArray array) {
-		if(array == null) return false;
+		if(isNull(array)) return false;
 		int i = array.size() - 1;
 		for (int j = 0; j < array.size() / 2; j++) {
-			replaceNumbers(array, i, j);
+			swapHighestAndLowest(array, i, j);
 			i--;
 		}
 		return true;
 	}
-
-
-	
-	
-
-	
 	
 }

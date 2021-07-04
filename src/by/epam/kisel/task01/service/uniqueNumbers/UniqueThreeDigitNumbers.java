@@ -6,12 +6,17 @@ package by.epam.kisel.task01.service.uniqueNumbers;
  *
  */
 public class UniqueThreeDigitNumbers implements WhichNumber {
+	
+	private final static int LOWEST_BORDER_OF_THREE_DIGITS_NUMBERS = 100;
+	private final static int HIGHEST_BORDER_OF_THREE_DIGITS_NUMBERS = 1000;
+	
 
 	@Override
 	public boolean isSuchNumber(int number) {
 		boolean unique = false;
 
-		if (Math.abs(number) >= 100 && Math.abs(number) < 1000) {
+		if (Math.abs(number) >= LOWEST_BORDER_OF_THREE_DIGITS_NUMBERS 
+				&& Math.abs(number) < HIGHEST_BORDER_OF_THREE_DIGITS_NUMBERS) {
 			int digit1 = number / 100;
 			int digit2 = (number / 10) % 10;
 			int digit3 = number % 10;

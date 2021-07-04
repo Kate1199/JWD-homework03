@@ -21,8 +21,8 @@ public class LeftRange implements Range {
 	}
 
 	@Override
-	public int findNewMiddle(IntArray copy, int middleIndex) {
-		return copy.get(left + middleIndex);
+	public int findNewMiddle(IntArray array, int middleIndex) {
+		return array.get(left + middleIndex);
 	}
 	
 }
